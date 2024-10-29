@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.cofile.sbbshop.mapper.FavoritesMapper">
+    <insert id="insertFavorite" parameterType="kr.co.cofile.sbbshop.domain.Favorite">
+        INSERT INTO favorites (title, link, image, lprice)
+        VALUES (#{title}, #{link}, #{image}, #{lprice})
+    </insert>
+
+    <select id="getAllFavorites" resultType="kr.co.cofile.sbbshop.domain.Favorite">
+        SELECT * FROM favorites
+    </select>
+</mapper>

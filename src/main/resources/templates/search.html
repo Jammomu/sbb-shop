@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Search</title>
+</head>
+<body>
+    <h1>네이버 쇼핑 검색</h1>
+    <input type="text" id="searchQuery" placeholder="상품명">
+    <button onclick="search()">검색</button>
+    
+    <div id="results"></div>
+
+    <script>
+        async function search() {
+            const query = document.getElementById('searchQuery').value;
+            const response = await fetch(`/api/search/${query}`);
+            const data = await response.json();
+
+            displayResults(data.items);
+        }
+
+        function displayResults(items) {
+            const results = document.getElementById('results');
+            results.innerHTML = '';
+
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <h2>${item.title}</h2>
+                    <p>${item.lprice}원</p>
+                    <button onclick="addToFavorites('${item.title}')">즐겨찾기 추가</button>
+                `;
+                results.appendChild(div);
+            });
+        }
+
+        function addToFavorites(itemTitle) {
+            fetch('/api/favorites', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title: itemTitle })
+            });
+            alert(`${itemTitle}이(가) 즐겨찾기에 추가되었습니다.`);
+        }
+    </script>
+</body>
+</html>

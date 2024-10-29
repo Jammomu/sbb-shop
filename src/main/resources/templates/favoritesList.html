@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FavoritesList</title>
+</head>
+<body>
+    <h1>내 즐겨찾기 목록</h1>
+    <div id="favoritesList"></div>
+
+    <script>
+        async function loadFavorites() {
+            const response = await fetch('/api/favorites');
+            const favorites = await response.json();
+
+            const favoritesList = document.getElementById('favoritesList');
+            favoritesList.innerHTML = '';
+            
+            favorites.forEach(favorite => {
+                const div = document.createElement('div');
+                div.innerHTML = `<h3>${favorite.title}</h3>`;
+                favoritesList.appendChild(div);
+            });
+        }
+
+        loadFavorites();
+    </script>
+</body>
+</html>
